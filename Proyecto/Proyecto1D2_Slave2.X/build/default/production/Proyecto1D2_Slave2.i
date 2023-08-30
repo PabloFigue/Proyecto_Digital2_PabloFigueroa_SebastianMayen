@@ -2783,33 +2783,39 @@ void main(void) {
 
     while(1){
         sensor_Luz = adc_read();
-        if (sensor_Luz <= 128){
-
+        if (sensor_Luz <= 50){
+            PORTDbits.RD0 = 1;
+            PORTDbits.RD1 = 1;
+            PORTCbits.RC2 = 1;
         }else{
-
+            PORTDbits.RD0 = 0;
+            PORTDbits.RD1 = 0;
+            PORTCbits.RC2 = 0;
         }
         if (Puente == 0){
             PORTAbits.RA2 = 1;
-            _delay((unsigned long)((1000)*(8000000/4000.0)));
+            PORTAbits.RA3 = 0;
+            _delay((unsigned long)((4250)*(8000000/4000.0)));
             PORTAbits.RA2= 0;
             Puente =2;
         }else if (Puente == 1){
             PORTAbits.RA3 = 1;
-            _delay((unsigned long)((1000)*(8000000/4000.0)));
+            PORTAbits.RA2 = 0;
+            _delay((unsigned long)((4250)*(8000000/4000.0)));
             PORTAbits.RA3 = 0;
             Puente = 2;
         }
 
 
-        if (PORTAbits.RA1 == 1){
+        if (PORTAbits.RA1 == 0){
             _delay((unsigned long)((2000)*(8000000/4000.0)));
-            if (PORTAbits.RA1 == 1){
+            if (PORTAbits.RA1 == 0){
                 sensor_Infra = 1;
             }else{
                 sensor_Infra = 0;
             }
         }
-       _delay((unsigned long)((100)*(8000000/4000.0)));
+
 
     }
     return;
@@ -2823,6 +2829,7 @@ void setup(void){
 
     TRISA = 0b00011;
     TRISB = 0;
+    TRISC = 0;
     TRISD = 0;
     TRISE = 0;
 

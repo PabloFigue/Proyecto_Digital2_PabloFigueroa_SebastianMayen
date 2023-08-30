@@ -489,9 +489,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;Proyecto1D2_Master.c: 45: int z;
 [v _z `i ~T0 @X0 1 e ]
 "46
-[; ;Proyecto1D2_Master.c: 46: int distancia,var_distancia;
+[; ;Proyecto1D2_Master.c: 46: int distancia,var_distancia,bandera_hr =0;
 [v _distancia `i ~T0 @X0 1 e ]
 [v _var_distancia `i ~T0 @X0 1 e ]
+[v _bandera_hr `i ~T0 @X0 1 e ]
+[i _bandera_hr
+-> 0 `i
+]
 "47
 [; ;Proyecto1D2_Master.c: 47: char distancia_string[10];
 [v _distancia_string `uc ~T0 @X0 -> 10 `i e ]
@@ -520,8 +524,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;Proyecto1D2_Master.c: 53: char buffer[20];
 [v _buffer `uc ~T0 @X0 -> 20 `i e ]
 "54
-[; ;Proyecto1D2_Master.c: 54: char usart[20];
-[v _usart `uc ~T0 @X0 -> 20 `i e ]
+[; ;Proyecto1D2_Master.c: 54: char usart[50];
+[v _usart `uc ~T0 @X0 -> 50 `i e ]
 [v $root$_main `(v ~T0 @X0 0 e ]
 "64
 [; ;Proyecto1D2_Master.c: 64: void main(void) {
@@ -614,8 +618,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;Proyecto1D2_Master.c: 98:     _delay((unsigned long)((50)*(8000000/4000.0)));
 [e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
 "100
-[; ;Proyecto1D2_Master.c: 100:     DS3231_Set_Date_Time(19,8,23,2,00,49,50);
-[e ( _DS3231_Set_Date_Time (4 , , , , , , -> -> 19 `i `uc -> -> 8 `i `uc -> -> 23 `i `uc -> -> 2 `i `uc -> -> 0 `i `uc -> -> 49 `i `uc -> -> 50 `i `uc ]
+[; ;Proyecto1D2_Master.c: 100:     DS3231_Set_Date_Time(27,8,23,2,02,10,00);
+[e ( _DS3231_Set_Date_Time (4 , , , , , , -> -> 27 `i `uc -> -> 8 `i `uc -> -> 23 `i `uc -> -> 2 `i `uc -> -> 2 `i `uc -> -> 10 `i `uc -> -> 0 `i `uc ]
 "101
 [; ;Proyecto1D2_Master.c: 101:     while(1){
 [e :U 145 ]
@@ -872,635 +876,696 @@ Version 4.0 HI-TECH Software Intermediate Code
 "197
 [; ;Proyecto1D2_Master.c: 197:                 Lcd_Write_String(buffer);
 [e ( _Lcd_Write_String (1 &U _buffer ]
-"199
-[; ;Proyecto1D2_Master.c: 199:                 sprintf(usart,"+%02u:%02u:%02u\r",hr, min, sec);
-[e ( _sprintf (1 , , , (. , &U _usart :s 12C -> _hr `i -> _min `i -> _sec `i ]
-"200
-[; ;Proyecto1D2_Master.c: 200:                 UART_write_string(usart);
-[e ( _UART_write_string (1 -> &U _usart `*Cuc ]
-"201
-[; ;Proyecto1D2_Master.c: 201:                 _delay((unsigned long)((2000)*(8000000/4000.0)));
-[e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"202
-[; ;Proyecto1D2_Master.c: 202:                 horariocar = 1;
-[e = _horariocar -> -> 1 `i `c ]
+"198
+[; ;Proyecto1D2_Master.c: 198:                 bandera_hr = 1;
+[e = _bandera_hr -> 1 `i ]
 "203
-[; ;Proyecto1D2_Master.c: 203:             }
+[; ;Proyecto1D2_Master.c: 203:                 horariocar = 1;
+[e = _horariocar -> -> 1 `i `c ]
+"204
+[; ;Proyecto1D2_Master.c: 204:             }
 }
 [e :U 154 ]
-"204
-[; ;Proyecto1D2_Master.c: 204:         }
+"205
+[; ;Proyecto1D2_Master.c: 205:         }
 }
 [e :U 153 ]
-"208
-[; ;Proyecto1D2_Master.c: 208:         sprintf(usart, "%02u/%02u/%02u\n", var_distancia, sensor_Luz, sensor_Infra);
-[e ( _sprintf (1 , , , (. , &U _usart :s 13C _var_distancia _sensor_Luz _sensor_Infra ]
-"209
-[; ;Proyecto1D2_Master.c: 209:         UART_write_string(usart);
-[e ( _UART_write_string (1 -> &U _usart `*Cuc ]
 "213
-[; ;Proyecto1D2_Master.c: 213:         if (distancia <= 10 && manual ==0){
-[e $ ! && <= _distancia -> 10 `i == -> _manual `i -> 0 `i 155  ]
+[; ;Proyecto1D2_Master.c: 213:         if (bandera_hr == 1){
+[e $ ! == _bandera_hr -> 1 `i 155  ]
 {
+"214
+[; ;Proyecto1D2_Master.c: 214:             sprintf(usart, "Distancia: %02u   Luminosidad: %02u   Infrarrojo: %02u   Hora_de_deteccion: %02u:%02u:%02u\n", var_distancia, sensor_Luz, sensor_Infra, hr, min, sec);
+[e ( _sprintf (1 , , , , , , (. , &U _usart :s 12C _var_distancia _sensor_Luz _sensor_Infra -> _hr `i -> _min `i -> _sec `i ]
 "215
-[; ;Proyecto1D2_Master.c: 215:             if (car == 2){
-[e $ ! == -> _car `i -> 2 `i 156  ]
-{
+[; ;Proyecto1D2_Master.c: 215:             UART_write_string(usart);
+[e ( _UART_write_string (1 -> &U _usart `*Cuc ]
+"216
+[; ;Proyecto1D2_Master.c: 216:             _delay((unsigned long)((2000)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
 "217
-[; ;Proyecto1D2_Master.c: 217:                 I2C_Master_Start();
-[e ( _I2C_Master_Start ..  ]
+[; ;Proyecto1D2_Master.c: 217:             UART_write_string(usart);
+[e ( _UART_write_string (1 -> &U _usart `*Cuc ]
 "218
-[; ;Proyecto1D2_Master.c: 218:                 I2C_Master_Write(0x50);
-[e ( _I2C_Master_Write (1 -> -> 80 `i `ui ]
+[; ;Proyecto1D2_Master.c: 218:             _delay((unsigned long)((500)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
 "219
-[; ;Proyecto1D2_Master.c: 219:                 I2C_Master_Write(0b00000000);
-[e ( _I2C_Master_Write (1 -> -> 0 `i `ui ]
+[; ;Proyecto1D2_Master.c: 219:             UART_write_string(usart);
+[e ( _UART_write_string (1 -> &U _usart `*Cuc ]
 "220
-[; ;Proyecto1D2_Master.c: 220:                 I2C_Master_Stop();
-[e ( _I2C_Master_Stop ..  ]
+[; ;Proyecto1D2_Master.c: 220:             bandera_hr = 0;
+[e = _bandera_hr -> 0 `i ]
 "221
-[; ;Proyecto1D2_Master.c: 221:                 _delay((unsigned long)((50)*(8000000/4000.0)));
-[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+[; ;Proyecto1D2_Master.c: 221:         }
+}
+[e $U 156  ]
 "222
-[; ;Proyecto1D2_Master.c: 222:                 Lcd_Clear();
-[e ( _Lcd_Clear ..  ]
+[; ;Proyecto1D2_Master.c: 222:         else if (bandera_hr == 0){
+[e :U 155 ]
+[e $ ! == _bandera_hr -> 0 `i 157  ]
+{
 "223
-[; ;Proyecto1D2_Master.c: 223:                 Lcd_Write_String("PARQUEO LLENO");
-[e ( _Lcd_Write_String (1 :s 14C ]
+[; ;Proyecto1D2_Master.c: 223:             sprintf(usart, "Distancia: %02u   Luminosidad: %02u   Infrarrojo: %02u\n", var_distancia, sensor_Luz, sensor_Infra);
+[e ( _sprintf (1 , , , (. , &U _usart :s 13C _var_distancia _sensor_Luz _sensor_Infra ]
 "224
-[; ;Proyecto1D2_Master.c: 224:                 _delay((unsigned long)((3000)*(8000000/4000.0)));
-[e ( __delay (1 -> * -> -> 3000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"226
-[; ;Proyecto1D2_Master.c: 226:             }else if (car == 1){
+[; ;Proyecto1D2_Master.c: 224:             UART_write_string(usart);
+[e ( _UART_write_string (1 -> &U _usart `*Cuc ]
+"225
+[; ;Proyecto1D2_Master.c: 225:         }
 }
-[e $U 157  ]
+[e :U 157 ]
 [e :U 156 ]
-[e $ ! == -> _car `i -> 1 `i 158  ]
+"229
+[; ;Proyecto1D2_Master.c: 229:         if (distancia <= 10 && manual ==0){
+[e $ ! && <= _distancia -> 10 `i == -> _manual `i -> 0 `i 158  ]
 {
-"228
-[; ;Proyecto1D2_Master.c: 228:                 car = 2;
-[e = _car -> -> 2 `i `c ]
-"230
-[; ;Proyecto1D2_Master.c: 230:                 I2C_Master_Start();
-[e ( _I2C_Master_Start ..  ]
 "231
-[; ;Proyecto1D2_Master.c: 231:                 I2C_Master_Write(0x52);
-[e ( _I2C_Master_Write (1 -> -> 82 `i `ui ]
-"232
-[; ;Proyecto1D2_Master.c: 232:                 I2C_Master_Write(0b00000010);
-[e ( _I2C_Master_Write (1 -> -> 2 `i `ui ]
-"233
-[; ;Proyecto1D2_Master.c: 233:                 I2C_Master_Stop();
-[e ( _I2C_Master_Stop ..  ]
-"234
-[; ;Proyecto1D2_Master.c: 234:                 _delay((unsigned long)((50)*(8000000/4000.0)));
-[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"236
-[; ;Proyecto1D2_Master.c: 236:                 I2C_Master_Start();
-[e ( _I2C_Master_Start ..  ]
-"237
-[; ;Proyecto1D2_Master.c: 237:                 I2C_Master_Write(0x53);
-[e ( _I2C_Master_Write (1 -> -> 83 `i `ui ]
-"238
-[; ;Proyecto1D2_Master.c: 238:                 z = I2C_Master_Read(0);
-[e = _z -> ( _I2C_Master_Read (1 -> -> 0 `i `us `i ]
-"239
-[; ;Proyecto1D2_Master.c: 239:                 I2C_Master_Stop();
-[e ( _I2C_Master_Stop ..  ]
-"240
-[; ;Proyecto1D2_Master.c: 240:                 _delay((unsigned long)((50)*(8000000/4000.0)));
-[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"242
-[; ;Proyecto1D2_Master.c: 242:                 while (sensor_Infra == 1){
-[e $U 159  ]
-[e :U 160 ]
+[; ;Proyecto1D2_Master.c: 231:             if (car == 2){
+[e $ ! == -> _car `i -> 2 `i 159  ]
 {
-"243
-[; ;Proyecto1D2_Master.c: 243:                     I2C_Master_Start();
+"233
+[; ;Proyecto1D2_Master.c: 233:                 I2C_Master_Start();
 [e ( _I2C_Master_Start ..  ]
-"244
-[; ;Proyecto1D2_Master.c: 244:                     I2C_Master_Write(0x52);
-[e ( _I2C_Master_Write (1 -> -> 82 `i `ui ]
-"245
-[; ;Proyecto1D2_Master.c: 245:                     I2C_Master_Write(0b00000001);
-[e ( _I2C_Master_Write (1 -> -> 1 `i `ui ]
-"246
-[; ;Proyecto1D2_Master.c: 246:                     I2C_Master_Stop();
-[e ( _I2C_Master_Stop ..  ]
-"247
-[; ;Proyecto1D2_Master.c: 247:                     _delay((unsigned long)((50)*(8000000/4000.0)));
-[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"249
-[; ;Proyecto1D2_Master.c: 249:                     I2C_Master_Start();
-[e ( _I2C_Master_Start ..  ]
-"250
-[; ;Proyecto1D2_Master.c: 250:                     I2C_Master_Write(0x53);
-[e ( _I2C_Master_Write (1 -> -> 83 `i `ui ]
-"251
-[; ;Proyecto1D2_Master.c: 251:                     sensor_Infra = I2C_Master_Read(0);
-[e = _sensor_Infra -> ( _I2C_Master_Read (1 -> -> 0 `i `us `i ]
-"252
-[; ;Proyecto1D2_Master.c: 252:                     I2C_Master_Stop();
-[e ( _I2C_Master_Stop ..  ]
-"253
-[; ;Proyecto1D2_Master.c: 253:                     _delay((unsigned long)((50)*(8000000/4000.0)));
-[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"254
-[; ;Proyecto1D2_Master.c: 254:                 }
-}
-[e :U 159 ]
-"242
-[; ;Proyecto1D2_Master.c: 242:                 while (sensor_Infra == 1){
-[e $ == _sensor_Infra -> 1 `i 160  ]
-[e :U 161 ]
-"256
-[; ;Proyecto1D2_Master.c: 256:                 horariocar = 0;
-[e = _horariocar -> -> 0 `i `c ]
-"258
-[; ;Proyecto1D2_Master.c: 258:                 I2C_Master_Start();
-[e ( _I2C_Master_Start ..  ]
-"259
-[; ;Proyecto1D2_Master.c: 259:                 I2C_Master_Write(0x50);
+"234
+[; ;Proyecto1D2_Master.c: 234:                 I2C_Master_Write(0x50);
 [e ( _I2C_Master_Write (1 -> -> 80 `i `ui ]
-"260
-[; ;Proyecto1D2_Master.c: 260:                 I2C_Master_Write(0b00000001);
-[e ( _I2C_Master_Write (1 -> -> 1 `i `ui ]
-"261
-[; ;Proyecto1D2_Master.c: 261:                 I2C_Master_Stop();
+"235
+[; ;Proyecto1D2_Master.c: 235:                 I2C_Master_Write(0b00000000);
+[e ( _I2C_Master_Write (1 -> -> 0 `i `ui ]
+"236
+[; ;Proyecto1D2_Master.c: 236:                 I2C_Master_Stop();
 [e ( _I2C_Master_Stop ..  ]
-"262
-[; ;Proyecto1D2_Master.c: 262:                 _delay((unsigned long)((50)*(8000000/4000.0)));
+"237
+[; ;Proyecto1D2_Master.c: 237:                 _delay((unsigned long)((50)*(8000000/4000.0)));
 [e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"264
-[; ;Proyecto1D2_Master.c: 264:                 distancia = 10;
+"238
+[; ;Proyecto1D2_Master.c: 238:                 Lcd_Clear();
+[e ( _Lcd_Clear ..  ]
+"239
+[; ;Proyecto1D2_Master.c: 239:                 Lcd_Write_String("PARQUEO LLENO");
+[e ( _Lcd_Write_String (1 :s 14C ]
+"240
+[; ;Proyecto1D2_Master.c: 240:                 _delay((unsigned long)((3000)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 3000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"242
+[; ;Proyecto1D2_Master.c: 242:             }else if (car == 1){
+}
+[e $U 160  ]
+[e :U 159 ]
+[e $ ! == -> _car `i -> 1 `i 161  ]
+{
+"244
+[; ;Proyecto1D2_Master.c: 244:                 car = 2;
+[e = _car -> -> 2 `i `c ]
+"246
+[; ;Proyecto1D2_Master.c: 246:                 I2C_Master_Start();
+[e ( _I2C_Master_Start ..  ]
+"247
+[; ;Proyecto1D2_Master.c: 247:                 I2C_Master_Write(0x52);
+[e ( _I2C_Master_Write (1 -> -> 82 `i `ui ]
+"248
+[; ;Proyecto1D2_Master.c: 248:                 I2C_Master_Write(0b00000010);
+[e ( _I2C_Master_Write (1 -> -> 2 `i `ui ]
+"249
+[; ;Proyecto1D2_Master.c: 249:                 I2C_Master_Stop();
+[e ( _I2C_Master_Stop ..  ]
+"250
+[; ;Proyecto1D2_Master.c: 250:                 _delay((unsigned long)((50)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"252
+[; ;Proyecto1D2_Master.c: 252:                 I2C_Master_Start();
+[e ( _I2C_Master_Start ..  ]
+"253
+[; ;Proyecto1D2_Master.c: 253:                 I2C_Master_Write(0x53);
+[e ( _I2C_Master_Write (1 -> -> 83 `i `ui ]
+"254
+[; ;Proyecto1D2_Master.c: 254:                 z = I2C_Master_Read(0);
+[e = _z -> ( _I2C_Master_Read (1 -> -> 0 `i `us `i ]
+"255
+[; ;Proyecto1D2_Master.c: 255:                 I2C_Master_Stop();
+[e ( _I2C_Master_Stop ..  ]
+"256
+[; ;Proyecto1D2_Master.c: 256:                 _delay((unsigned long)((5000)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 5000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"272
+[; ;Proyecto1D2_Master.c: 272:                 horariocar = 0;
+[e = _horariocar -> -> 0 `i `c ]
+"274
+[; ;Proyecto1D2_Master.c: 274:                 I2C_Master_Start();
+[e ( _I2C_Master_Start ..  ]
+"275
+[; ;Proyecto1D2_Master.c: 275:                 I2C_Master_Write(0x50);
+[e ( _I2C_Master_Write (1 -> -> 80 `i `ui ]
+"276
+[; ;Proyecto1D2_Master.c: 276:                 I2C_Master_Write(0b00000001);
+[e ( _I2C_Master_Write (1 -> -> 1 `i `ui ]
+"277
+[; ;Proyecto1D2_Master.c: 277:                 I2C_Master_Stop();
+[e ( _I2C_Master_Stop ..  ]
+"278
+[; ;Proyecto1D2_Master.c: 278:                 _delay((unsigned long)((50)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"280
+[; ;Proyecto1D2_Master.c: 280:                 distancia = 10;
 [e = _distancia -> 10 `i ]
-"265
-[; ;Proyecto1D2_Master.c: 265:                 sensor_Infra = 0;
+"281
+[; ;Proyecto1D2_Master.c: 281:                 sensor_Infra = 0;
 [e = _sensor_Infra -> 0 `i ]
-"266
-[; ;Proyecto1D2_Master.c: 266:                 while (sensor_Infra == 0){
+"282
+[; ;Proyecto1D2_Master.c: 282:                 while (sensor_Infra == 0){
 [e $U 162  ]
 [e :U 163 ]
 {
-"267
-[; ;Proyecto1D2_Master.c: 267:                     while (distancia <= 10){
+"283
+[; ;Proyecto1D2_Master.c: 283:                     while (distancia <= 10){
 [e $U 165  ]
 [e :U 166 ]
 {
-"269
-[; ;Proyecto1D2_Master.c: 269:                        I2C_Master_Start();
+"285
+[; ;Proyecto1D2_Master.c: 285:                        I2C_Master_Start();
 [e ( _I2C_Master_Start ..  ]
-"270
-[; ;Proyecto1D2_Master.c: 270:                        I2C_Master_Write(0x51);
+"286
+[; ;Proyecto1D2_Master.c: 286:                        I2C_Master_Write(0x51);
 [e ( _I2C_Master_Write (1 -> -> 81 `i `ui ]
-"271
-[; ;Proyecto1D2_Master.c: 271:                        distancia = I2C_Master_Read(0);
+"287
+[; ;Proyecto1D2_Master.c: 287:                        distancia = I2C_Master_Read(0);
 [e = _distancia -> ( _I2C_Master_Read (1 -> -> 0 `i `us `i ]
-"272
-[; ;Proyecto1D2_Master.c: 272:                        I2C_Master_Stop();
+"288
+[; ;Proyecto1D2_Master.c: 288:                        I2C_Master_Stop();
 [e ( _I2C_Master_Stop ..  ]
-"273
-[; ;Proyecto1D2_Master.c: 273:                        _delay((unsigned long)((50)*(8000000/4000.0)));
+"289
+[; ;Proyecto1D2_Master.c: 289:                        _delay((unsigned long)((50)*(8000000/4000.0)));
 [e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"274
-[; ;Proyecto1D2_Master.c: 274:                     }
+"290
+[; ;Proyecto1D2_Master.c: 290:                     }
 }
 [e :U 165 ]
-"267
-[; ;Proyecto1D2_Master.c: 267:                     while (distancia <= 10){
+"283
+[; ;Proyecto1D2_Master.c: 283:                     while (distancia <= 10){
 [e $ <= _distancia -> 10 `i 166  ]
 [e :U 167 ]
-"276
-[; ;Proyecto1D2_Master.c: 276:                     I2C_Master_Start();
+"292
+[; ;Proyecto1D2_Master.c: 292:                     I2C_Master_Start();
 [e ( _I2C_Master_Start ..  ]
-"277
-[; ;Proyecto1D2_Master.c: 277:                     I2C_Master_Write(0x52);
+"293
+[; ;Proyecto1D2_Master.c: 293:                     I2C_Master_Write(0x52);
 [e ( _I2C_Master_Write (1 -> -> 82 `i `ui ]
-"278
-[; ;Proyecto1D2_Master.c: 278:                     I2C_Master_Write(0b00000001);
+"294
+[; ;Proyecto1D2_Master.c: 294:                     I2C_Master_Write(0b00000001);
 [e ( _I2C_Master_Write (1 -> -> 1 `i `ui ]
-"279
-[; ;Proyecto1D2_Master.c: 279:                     I2C_Master_Stop();
+"295
+[; ;Proyecto1D2_Master.c: 295:                     I2C_Master_Stop();
 [e ( _I2C_Master_Stop ..  ]
-"280
-[; ;Proyecto1D2_Master.c: 280:                     _delay((unsigned long)((50)*(8000000/4000.0)));
+"296
+[; ;Proyecto1D2_Master.c: 296:                     _delay((unsigned long)((50)*(8000000/4000.0)));
 [e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"281
-[; ;Proyecto1D2_Master.c: 281:                     I2C_Master_Start();
+"297
+[; ;Proyecto1D2_Master.c: 297:                     I2C_Master_Start();
 [e ( _I2C_Master_Start ..  ]
-"282
-[; ;Proyecto1D2_Master.c: 282:                     I2C_Master_Write(0x53);
+"298
+[; ;Proyecto1D2_Master.c: 298:                     I2C_Master_Write(0x53);
 [e ( _I2C_Master_Write (1 -> -> 83 `i `ui ]
-"283
-[; ;Proyecto1D2_Master.c: 283:                     sensor_Infra = I2C_Master_Read(0);
+"299
+[; ;Proyecto1D2_Master.c: 299:                     sensor_Infra = I2C_Master_Read(0);
 [e = _sensor_Infra -> ( _I2C_Master_Read (1 -> -> 0 `i `us `i ]
-"284
-[; ;Proyecto1D2_Master.c: 284:                     I2C_Master_Stop();
+"300
+[; ;Proyecto1D2_Master.c: 300:                     I2C_Master_Stop();
 [e ( _I2C_Master_Stop ..  ]
-"285
-[; ;Proyecto1D2_Master.c: 285:                      _delay((unsigned long)((50)*(8000000/4000.0)));
+"301
+[; ;Proyecto1D2_Master.c: 301:                      _delay((unsigned long)((50)*(8000000/4000.0)));
 [e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"286
-[; ;Proyecto1D2_Master.c: 286:                 }
+"302
+[; ;Proyecto1D2_Master.c: 302:                 }
 }
 [e :U 162 ]
-"266
-[; ;Proyecto1D2_Master.c: 266:                 while (sensor_Infra == 0){
+"282
+[; ;Proyecto1D2_Master.c: 282:                 while (sensor_Infra == 0){
 [e $ == _sensor_Infra -> 0 `i 163  ]
 [e :U 164 ]
-"288
-[; ;Proyecto1D2_Master.c: 288:             }else{
+"304
+[; ;Proyecto1D2_Master.c: 304:             }else{
 }
 [e $U 168  ]
-[e :U 158 ]
+[e :U 161 ]
 {
-"290
-[; ;Proyecto1D2_Master.c: 290:                 I2C_Master_Start();
+"306
+[; ;Proyecto1D2_Master.c: 306:                 I2C_Master_Start();
 [e ( _I2C_Master_Start ..  ]
-"291
-[; ;Proyecto1D2_Master.c: 291:                 I2C_Master_Write(0x50);
+"307
+[; ;Proyecto1D2_Master.c: 307:                 I2C_Master_Write(0x50);
 [e ( _I2C_Master_Write (1 -> -> 80 `i `ui ]
-"292
-[; ;Proyecto1D2_Master.c: 292:                 I2C_Master_Write(0b00000001);
+"308
+[; ;Proyecto1D2_Master.c: 308:                 I2C_Master_Write(0b00000001);
 [e ( _I2C_Master_Write (1 -> -> 1 `i `ui ]
-"293
-[; ;Proyecto1D2_Master.c: 293:                 I2C_Master_Stop();
+"309
+[; ;Proyecto1D2_Master.c: 309:                 I2C_Master_Stop();
 [e ( _I2C_Master_Stop ..  ]
-"294
-[; ;Proyecto1D2_Master.c: 294:                 _delay((unsigned long)((50)*(8000000/4000.0)));
+"310
+[; ;Proyecto1D2_Master.c: 310:                 _delay((unsigned long)((50)*(8000000/4000.0)));
 [e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"295
-[; ;Proyecto1D2_Master.c: 295:             }
+"311
+[; ;Proyecto1D2_Master.c: 311:             }
 }
 [e :U 168 ]
-[e :U 157 ]
-"297
-[; ;Proyecto1D2_Master.c: 297:         }else if (distancia > 10 && sensor_Infra == 1 && car==0 && manual == 0){
+[e :U 160 ]
+"313
+[; ;Proyecto1D2_Master.c: 313:         }else if (distancia > 10 && sensor_Infra == 1 && car==0 && manual == 0){
 }
 [e $U 169  ]
-[e :U 155 ]
+[e :U 158 ]
 [e $ ! && && && > _distancia -> 10 `i == _sensor_Infra -> 1 `i == -> _car `i -> 0 `i == -> _manual `i -> 0 `i 170  ]
 {
-"299
-[; ;Proyecto1D2_Master.c: 299:             I2C_Master_Start();
+"315
+[; ;Proyecto1D2_Master.c: 315:             I2C_Master_Start();
 [e ( _I2C_Master_Start ..  ]
-"300
-[; ;Proyecto1D2_Master.c: 300:             I2C_Master_Write(0x50);
+"316
+[; ;Proyecto1D2_Master.c: 316:             I2C_Master_Write(0x50);
 [e ( _I2C_Master_Write (1 -> -> 80 `i `ui ]
-"301
-[; ;Proyecto1D2_Master.c: 301:             I2C_Master_Write(0b00000000);
+"317
+[; ;Proyecto1D2_Master.c: 317:             I2C_Master_Write(0b00000000);
 [e ( _I2C_Master_Write (1 -> -> 0 `i `ui ]
-"302
-[; ;Proyecto1D2_Master.c: 302:             I2C_Master_Stop();
+"318
+[; ;Proyecto1D2_Master.c: 318:             I2C_Master_Stop();
 [e ( _I2C_Master_Stop ..  ]
-"303
-[; ;Proyecto1D2_Master.c: 303:             _delay((unsigned long)((50)*(8000000/4000.0)));
+"319
+[; ;Proyecto1D2_Master.c: 319:             _delay((unsigned long)((50)*(8000000/4000.0)));
 [e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"304
-[; ;Proyecto1D2_Master.c: 304:             car =1;
+"320
+[; ;Proyecto1D2_Master.c: 320:             car =1;
 [e = _car -> -> 1 `i `c ]
-"305
-[; ;Proyecto1D2_Master.c: 305:         }else if (distancia > 10 && sensor_Infra == 1 && car==2 && manual == 0){
+"321
+[; ;Proyecto1D2_Master.c: 321:         }else if (distancia > 10 && sensor_Infra == 1 && car==2 && manual == 0){
 }
 [e $U 171  ]
 [e :U 170 ]
 [e $ ! && && && > _distancia -> 10 `i == _sensor_Infra -> 1 `i == -> _car `i -> 2 `i == -> _manual `i -> 0 `i 172  ]
 {
-"307
-[; ;Proyecto1D2_Master.c: 307:             I2C_Master_Start();
+"323
+[; ;Proyecto1D2_Master.c: 323:             I2C_Master_Start();
 [e ( _I2C_Master_Start ..  ]
-"308
-[; ;Proyecto1D2_Master.c: 308:             I2C_Master_Write(0x50);
+"324
+[; ;Proyecto1D2_Master.c: 324:             I2C_Master_Write(0x50);
 [e ( _I2C_Master_Write (1 -> -> 80 `i `ui ]
-"309
-[; ;Proyecto1D2_Master.c: 309:             I2C_Master_Write(0b00000000);
+"325
+[; ;Proyecto1D2_Master.c: 325:             I2C_Master_Write(0b00000000);
 [e ( _I2C_Master_Write (1 -> -> 0 `i `ui ]
-"310
-[; ;Proyecto1D2_Master.c: 310:             I2C_Master_Stop();
+"326
+[; ;Proyecto1D2_Master.c: 326:             I2C_Master_Stop();
 [e ( _I2C_Master_Stop ..  ]
-"311
-[; ;Proyecto1D2_Master.c: 311:             _delay((unsigned long)((50)*(8000000/4000.0)));
+"327
+[; ;Proyecto1D2_Master.c: 327:             _delay((unsigned long)((50)*(8000000/4000.0)));
 [e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"313
-[; ;Proyecto1D2_Master.c: 313:         }else if (manual == 1 && distancia > 10 && sensor_Infra == 1){
+"329
+[; ;Proyecto1D2_Master.c: 329:         }else if (manual == 1 && distancia > 10 && sensor_Infra == 1){
 }
 [e $U 173  ]
 [e :U 172 ]
 [e $ ! && && == -> _manual `i -> 1 `i > _distancia -> 10 `i == _sensor_Infra -> 1 `i 174  ]
 {
-"315
-[; ;Proyecto1D2_Master.c: 315:             _delay((unsigned long)((100)*(8000000/4000.0)));
+"331
+[; ;Proyecto1D2_Master.c: 331:             _delay((unsigned long)((100)*(8000000/4000.0)));
 [e ( __delay (1 -> * -> -> 100 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"316
-[; ;Proyecto1D2_Master.c: 316:             I2C_Master_Start();
+"332
+[; ;Proyecto1D2_Master.c: 332:             I2C_Master_Start();
 [e ( _I2C_Master_Start ..  ]
-"317
-[; ;Proyecto1D2_Master.c: 317:             I2C_Master_Write(0x50);
+"333
+[; ;Proyecto1D2_Master.c: 333:             I2C_Master_Write(0x50);
 [e ( _I2C_Master_Write (1 -> -> 80 `i `ui ]
-"318
-[; ;Proyecto1D2_Master.c: 318:             I2C_Master_Write(0b00000001);
+"334
+[; ;Proyecto1D2_Master.c: 334:             I2C_Master_Write(0b00000001);
 [e ( _I2C_Master_Write (1 -> -> 1 `i `ui ]
-"319
-[; ;Proyecto1D2_Master.c: 319:             I2C_Master_Stop();
+"335
+[; ;Proyecto1D2_Master.c: 335:             I2C_Master_Stop();
 [e ( _I2C_Master_Stop ..  ]
-"320
-[; ;Proyecto1D2_Master.c: 320:             _delay((unsigned long)((2000)*(8000000/4000.0)));
+"336
+[; ;Proyecto1D2_Master.c: 336:             _delay((unsigned long)((2000)*(8000000/4000.0)));
 [e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"322
-[; ;Proyecto1D2_Master.c: 322:             if (car == 2){
+"338
+[; ;Proyecto1D2_Master.c: 338:             if (car == 2){
 [e $ ! == -> _car `i -> 2 `i 175  ]
 {
-"323
-[; ;Proyecto1D2_Master.c: 323:                 while (distancia >10){
+"339
+[; ;Proyecto1D2_Master.c: 339:                 while (distancia >10){
 [e $U 176  ]
 [e :U 177 ]
 {
-"324
-[; ;Proyecto1D2_Master.c: 324:                     while (sensor_Infra == 1){
+"340
+[; ;Proyecto1D2_Master.c: 340:                     while (sensor_Infra == 1){
 [e $U 179  ]
 [e :U 180 ]
 {
-"325
-[; ;Proyecto1D2_Master.c: 325:                         I2C_Master_Start();
+"341
+[; ;Proyecto1D2_Master.c: 341:                         I2C_Master_Start();
 [e ( _I2C_Master_Start ..  ]
-"326
-[; ;Proyecto1D2_Master.c: 326:                         I2C_Master_Write(0x52);
+"342
+[; ;Proyecto1D2_Master.c: 342:                         I2C_Master_Write(0x52);
 [e ( _I2C_Master_Write (1 -> -> 82 `i `ui ]
-"327
-[; ;Proyecto1D2_Master.c: 327:                         I2C_Master_Write(0b00000001);
+"343
+[; ;Proyecto1D2_Master.c: 343:                         I2C_Master_Write(0b00000001);
 [e ( _I2C_Master_Write (1 -> -> 1 `i `ui ]
-"328
-[; ;Proyecto1D2_Master.c: 328:                         I2C_Master_Stop();
+"344
+[; ;Proyecto1D2_Master.c: 344:                         I2C_Master_Stop();
 [e ( _I2C_Master_Stop ..  ]
-"329
-[; ;Proyecto1D2_Master.c: 329:                         _delay((unsigned long)((50)*(8000000/4000.0)));
+"345
+[; ;Proyecto1D2_Master.c: 345:                         _delay((unsigned long)((50)*(8000000/4000.0)));
 [e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"331
-[; ;Proyecto1D2_Master.c: 331:                         I2C_Master_Start();
+"347
+[; ;Proyecto1D2_Master.c: 347:                         I2C_Master_Start();
 [e ( _I2C_Master_Start ..  ]
-"332
-[; ;Proyecto1D2_Master.c: 332:                         I2C_Master_Write(0x53);
+"348
+[; ;Proyecto1D2_Master.c: 348:                         I2C_Master_Write(0x53);
 [e ( _I2C_Master_Write (1 -> -> 83 `i `ui ]
-"333
-[; ;Proyecto1D2_Master.c: 333:                         sensor_Infra = I2C_Master_Read(0);
+"349
+[; ;Proyecto1D2_Master.c: 349:                         sensor_Infra = I2C_Master_Read(0);
 [e = _sensor_Infra -> ( _I2C_Master_Read (1 -> -> 0 `i `us `i ]
-"334
-[; ;Proyecto1D2_Master.c: 334:                         I2C_Master_Stop();
+"350
+[; ;Proyecto1D2_Master.c: 350:                         I2C_Master_Stop();
 [e ( _I2C_Master_Stop ..  ]
-"335
-[; ;Proyecto1D2_Master.c: 335:                         _delay((unsigned long)((50)*(8000000/4000.0)));
+"351
+[; ;Proyecto1D2_Master.c: 351:                         _delay((unsigned long)((50)*(8000000/4000.0)));
 [e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"336
-[; ;Proyecto1D2_Master.c: 336:                     }
+"352
+[; ;Proyecto1D2_Master.c: 352:                     }
 }
 [e :U 179 ]
-"324
-[; ;Proyecto1D2_Master.c: 324:                     while (sensor_Infra == 1){
+"340
+[; ;Proyecto1D2_Master.c: 340:                     while (sensor_Infra == 1){
 [e $ == _sensor_Infra -> 1 `i 180  ]
 [e :U 181 ]
-"337
-[; ;Proyecto1D2_Master.c: 337:                     I2C_Master_Start();
+"353
+[; ;Proyecto1D2_Master.c: 353:                     I2C_Master_Start();
 [e ( _I2C_Master_Start ..  ]
-"338
-[; ;Proyecto1D2_Master.c: 338:                     I2C_Master_Write(0x51);
+"354
+[; ;Proyecto1D2_Master.c: 354:                     I2C_Master_Write(0x51);
 [e ( _I2C_Master_Write (1 -> -> 81 `i `ui ]
-"339
-[; ;Proyecto1D2_Master.c: 339:                     distancia = I2C_Master_Read(0);
+"355
+[; ;Proyecto1D2_Master.c: 355:                     distancia = I2C_Master_Read(0);
 [e = _distancia -> ( _I2C_Master_Read (1 -> -> 0 `i `us `i ]
-"340
-[; ;Proyecto1D2_Master.c: 340:                     I2C_Master_Stop();
+"356
+[; ;Proyecto1D2_Master.c: 356:                     I2C_Master_Stop();
 [e ( _I2C_Master_Stop ..  ]
-"341
-[; ;Proyecto1D2_Master.c: 341:                     _delay((unsigned long)((50)*(8000000/4000.0)));
+"357
+[; ;Proyecto1D2_Master.c: 357:                     _delay((unsigned long)((50)*(8000000/4000.0)));
 [e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"342
-[; ;Proyecto1D2_Master.c: 342:                 }
+"358
+[; ;Proyecto1D2_Master.c: 358:                 }
 }
 [e :U 176 ]
-"323
-[; ;Proyecto1D2_Master.c: 323:                 while (distancia >10){
+"339
+[; ;Proyecto1D2_Master.c: 339:                 while (distancia >10){
 [e $ > _distancia -> 10 `i 177  ]
 [e :U 178 ]
-"344
-[; ;Proyecto1D2_Master.c: 344:                 I2C_Master_Start();
-[e ( _I2C_Master_Start ..  ]
-"345
-[; ;Proyecto1D2_Master.c: 345:                 I2C_Master_Write(0x50);
-[e ( _I2C_Master_Write (1 -> -> 80 `i `ui ]
-"346
-[; ;Proyecto1D2_Master.c: 346:                 I2C_Master_Write(0b00000000);
-[e ( _I2C_Master_Write (1 -> -> 0 `i `ui ]
-"347
-[; ;Proyecto1D2_Master.c: 347:                 I2C_Master_Stop();
-[e ( _I2C_Master_Stop ..  ]
-"348
-[; ;Proyecto1D2_Master.c: 348:                 _delay((unsigned long)((50)*(8000000/4000.0)));
-[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"350
-[; ;Proyecto1D2_Master.c: 350:                 I2C_Master_Start();
-[e ( _I2C_Master_Start ..  ]
-"351
-[; ;Proyecto1D2_Master.c: 351:                 I2C_Master_Write(0x52);
-[e ( _I2C_Master_Write (1 -> -> 82 `i `ui ]
-"352
-[; ;Proyecto1D2_Master.c: 352:                 I2C_Master_Write(0b00000011);
-[e ( _I2C_Master_Write (1 -> -> 3 `i `ui ]
-"353
-[; ;Proyecto1D2_Master.c: 353:                 I2C_Master_Stop();
-[e ( _I2C_Master_Stop ..  ]
-"354
-[; ;Proyecto1D2_Master.c: 354:                 _delay((unsigned long)((50)*(8000000/4000.0)));
-[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"356
-[; ;Proyecto1D2_Master.c: 356:                 car = 1;
-[e = _car -> -> 1 `i `c ]
-"358
-[; ;Proyecto1D2_Master.c: 358:             }else if (car == 1){
-}
-[e $U 182  ]
-[e :U 175 ]
-[e $ ! == -> _car `i -> 1 `i 183  ]
-{
 "359
-[; ;Proyecto1D2_Master.c: 359:                 while (distancia >10){
-[e $U 184  ]
-[e :U 185 ]
+[; ;Proyecto1D2_Master.c: 359:                 while (distancia <= 10){
+[e $U 182  ]
+[e :U 183 ]
 {
 "360
-[; ;Proyecto1D2_Master.c: 360:                     while (sensor_Infra == 1){
-[e $U 187  ]
-[e :U 188 ]
-{
-"361
-[; ;Proyecto1D2_Master.c: 361:                         I2C_Master_Start();
+[; ;Proyecto1D2_Master.c: 360:                     I2C_Master_Start();
 [e ( _I2C_Master_Start ..  ]
+"361
+[; ;Proyecto1D2_Master.c: 361:                     I2C_Master_Write(0x51);
+[e ( _I2C_Master_Write (1 -> -> 81 `i `ui ]
 "362
-[; ;Proyecto1D2_Master.c: 362:                         I2C_Master_Write(0x52);
-[e ( _I2C_Master_Write (1 -> -> 82 `i `ui ]
+[; ;Proyecto1D2_Master.c: 362:                     distancia = I2C_Master_Read(0);
+[e = _distancia -> ( _I2C_Master_Read (1 -> -> 0 `i `us `i ]
 "363
-[; ;Proyecto1D2_Master.c: 363:                         I2C_Master_Write(0b00000001);
-[e ( _I2C_Master_Write (1 -> -> 1 `i `ui ]
-"364
-[; ;Proyecto1D2_Master.c: 364:                         I2C_Master_Stop();
+[; ;Proyecto1D2_Master.c: 363:                     I2C_Master_Stop();
 [e ( _I2C_Master_Stop ..  ]
-"365
-[; ;Proyecto1D2_Master.c: 365:                         _delay((unsigned long)((50)*(8000000/4000.0)));
+"364
+[; ;Proyecto1D2_Master.c: 364:                     _delay((unsigned long)((50)*(8000000/4000.0)));
 [e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"365
+[; ;Proyecto1D2_Master.c: 365:                 }
+}
+[e :U 182 ]
+"359
+[; ;Proyecto1D2_Master.c: 359:                 while (distancia <= 10){
+[e $ <= _distancia -> 10 `i 183  ]
+[e :U 184 ]
 "367
-[; ;Proyecto1D2_Master.c: 367:                         I2C_Master_Start();
+[; ;Proyecto1D2_Master.c: 367:                 I2C_Master_Start();
 [e ( _I2C_Master_Start ..  ]
 "368
-[; ;Proyecto1D2_Master.c: 368:                         I2C_Master_Write(0x53);
-[e ( _I2C_Master_Write (1 -> -> 83 `i `ui ]
+[; ;Proyecto1D2_Master.c: 368:                 I2C_Master_Write(0x50);
+[e ( _I2C_Master_Write (1 -> -> 80 `i `ui ]
 "369
-[; ;Proyecto1D2_Master.c: 369:                         sensor_Infra = I2C_Master_Read(0);
-[e = _sensor_Infra -> ( _I2C_Master_Read (1 -> -> 0 `i `us `i ]
+[; ;Proyecto1D2_Master.c: 369:                 I2C_Master_Write(0b00000000);
+[e ( _I2C_Master_Write (1 -> -> 0 `i `ui ]
 "370
-[; ;Proyecto1D2_Master.c: 370:                         I2C_Master_Stop();
+[; ;Proyecto1D2_Master.c: 370:                 I2C_Master_Stop();
 [e ( _I2C_Master_Stop ..  ]
 "371
-[; ;Proyecto1D2_Master.c: 371:                         _delay((unsigned long)((50)*(8000000/4000.0)));
+[; ;Proyecto1D2_Master.c: 371:                 _delay((unsigned long)((50)*(8000000/4000.0)));
 [e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"372
-[; ;Proyecto1D2_Master.c: 372:                     }
-}
-[e :U 187 ]
-"360
-[; ;Proyecto1D2_Master.c: 360:                     while (sensor_Infra == 1){
-[e $ == _sensor_Infra -> 1 `i 188  ]
-[e :U 189 ]
-"373
-[; ;Proyecto1D2_Master.c: 373:                     I2C_Master_Start();
-[e ( _I2C_Master_Start ..  ]
 "374
-[; ;Proyecto1D2_Master.c: 374:                     I2C_Master_Write(0x51);
-[e ( _I2C_Master_Write (1 -> -> 81 `i `ui ]
+[; ;Proyecto1D2_Master.c: 374:                 I2C_Master_Start();
+[e ( _I2C_Master_Start ..  ]
 "375
-[; ;Proyecto1D2_Master.c: 375:                     distancia = I2C_Master_Read(0);
-[e = _distancia -> ( _I2C_Master_Read (1 -> -> 0 `i `us `i ]
+[; ;Proyecto1D2_Master.c: 375:                 I2C_Master_Write(0x52);
+[e ( _I2C_Master_Write (1 -> -> 82 `i `ui ]
 "376
-[; ;Proyecto1D2_Master.c: 376:                     I2C_Master_Stop();
-[e ( _I2C_Master_Stop ..  ]
+[; ;Proyecto1D2_Master.c: 376:                 I2C_Master_Write(0b00000011);
+[e ( _I2C_Master_Write (1 -> -> 3 `i `ui ]
 "377
-[; ;Proyecto1D2_Master.c: 377:                     _delay((unsigned long)((50)*(8000000/4000.0)));
-[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+[; ;Proyecto1D2_Master.c: 377:                 I2C_Master_Stop();
+[e ( _I2C_Master_Stop ..  ]
 "378
-[; ;Proyecto1D2_Master.c: 378:                 }
-}
-[e :U 184 ]
-"359
-[; ;Proyecto1D2_Master.c: 359:                 while (distancia >10){
-[e $ > _distancia -> 10 `i 185  ]
-[e :U 186 ]
+[; ;Proyecto1D2_Master.c: 378:                 _delay((unsigned long)((50)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
 "380
 [; ;Proyecto1D2_Master.c: 380:                 I2C_Master_Start();
 [e ( _I2C_Master_Start ..  ]
 "381
-[; ;Proyecto1D2_Master.c: 381:                 I2C_Master_Write(0x50);
-[e ( _I2C_Master_Write (1 -> -> 80 `i `ui ]
+[; ;Proyecto1D2_Master.c: 381:                 I2C_Master_Write(0x53);
+[e ( _I2C_Master_Write (1 -> -> 83 `i `ui ]
 "382
-[; ;Proyecto1D2_Master.c: 382:                 I2C_Master_Write(0b00000000);
-[e ( _I2C_Master_Write (1 -> -> 0 `i `ui ]
+[; ;Proyecto1D2_Master.c: 382:                 z = I2C_Master_Read(0);
+[e = _z -> ( _I2C_Master_Read (1 -> -> 0 `i `us `i ]
 "383
 [; ;Proyecto1D2_Master.c: 383:                 I2C_Master_Stop();
 [e ( _I2C_Master_Stop ..  ]
 "384
 [; ;Proyecto1D2_Master.c: 384:                 _delay((unsigned long)((50)*(8000000/4000.0)));
 [e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"385
-[; ;Proyecto1D2_Master.c: 385:                 car =0;
-[e = _car -> -> 0 `i `c ]
 "386
-[; ;Proyecto1D2_Master.c: 386:             }
-}
-[e :U 183 ]
-[e :U 182 ]
-"387
-[; ;Proyecto1D2_Master.c: 387:         horariocar = 0;
-[e = _horariocar -> -> 0 `i `c ]
+[; ;Proyecto1D2_Master.c: 386:                 car = 1;
+[e = _car -> -> 1 `i `c ]
 "388
-[; ;Proyecto1D2_Master.c: 388:         manual = 0;
-[e = _manual -> -> 0 `i `c ]
+[; ;Proyecto1D2_Master.c: 388:             }else if (car == 1){
+}
+[e $U 185  ]
+[e :U 175 ]
+[e $ ! == -> _car `i -> 1 `i 186  ]
+{
 "389
-[; ;Proyecto1D2_Master.c: 389:         _delay((unsigned long)((2000)*(8000000/4000.0)));
-[e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+[; ;Proyecto1D2_Master.c: 389:                 while (distancia >10){
+[e $U 187  ]
+[e :U 188 ]
+{
 "390
-[; ;Proyecto1D2_Master.c: 390:         }
+[; ;Proyecto1D2_Master.c: 390:                     while (sensor_Infra == 1){
+[e $U 190  ]
+[e :U 191 ]
+{
+"391
+[; ;Proyecto1D2_Master.c: 391:                         I2C_Master_Start();
+[e ( _I2C_Master_Start ..  ]
+"392
+[; ;Proyecto1D2_Master.c: 392:                         I2C_Master_Write(0x52);
+[e ( _I2C_Master_Write (1 -> -> 82 `i `ui ]
+"393
+[; ;Proyecto1D2_Master.c: 393:                         I2C_Master_Write(0b00000001);
+[e ( _I2C_Master_Write (1 -> -> 1 `i `ui ]
+"394
+[; ;Proyecto1D2_Master.c: 394:                         I2C_Master_Stop();
+[e ( _I2C_Master_Stop ..  ]
+"395
+[; ;Proyecto1D2_Master.c: 395:                         _delay((unsigned long)((50)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"397
+[; ;Proyecto1D2_Master.c: 397:                         I2C_Master_Start();
+[e ( _I2C_Master_Start ..  ]
+"398
+[; ;Proyecto1D2_Master.c: 398:                         I2C_Master_Write(0x53);
+[e ( _I2C_Master_Write (1 -> -> 83 `i `ui ]
+"399
+[; ;Proyecto1D2_Master.c: 399:                         sensor_Infra = I2C_Master_Read(0);
+[e = _sensor_Infra -> ( _I2C_Master_Read (1 -> -> 0 `i `us `i ]
+"400
+[; ;Proyecto1D2_Master.c: 400:                         I2C_Master_Stop();
+[e ( _I2C_Master_Stop ..  ]
+"401
+[; ;Proyecto1D2_Master.c: 401:                         _delay((unsigned long)((50)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"402
+[; ;Proyecto1D2_Master.c: 402:                     }
+}
+[e :U 190 ]
+"390
+[; ;Proyecto1D2_Master.c: 390:                     while (sensor_Infra == 1){
+[e $ == _sensor_Infra -> 1 `i 191  ]
+[e :U 192 ]
+"403
+[; ;Proyecto1D2_Master.c: 403:                     I2C_Master_Start();
+[e ( _I2C_Master_Start ..  ]
+"404
+[; ;Proyecto1D2_Master.c: 404:                     I2C_Master_Write(0x51);
+[e ( _I2C_Master_Write (1 -> -> 81 `i `ui ]
+"405
+[; ;Proyecto1D2_Master.c: 405:                     distancia = I2C_Master_Read(0);
+[e = _distancia -> ( _I2C_Master_Read (1 -> -> 0 `i `us `i ]
+"406
+[; ;Proyecto1D2_Master.c: 406:                     I2C_Master_Stop();
+[e ( _I2C_Master_Stop ..  ]
+"407
+[; ;Proyecto1D2_Master.c: 407:                     _delay((unsigned long)((50)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"408
+[; ;Proyecto1D2_Master.c: 408:                 }
+}
+[e :U 187 ]
+"389
+[; ;Proyecto1D2_Master.c: 389:                 while (distancia >10){
+[e $ > _distancia -> 10 `i 188  ]
+[e :U 189 ]
+"409
+[; ;Proyecto1D2_Master.c: 409:                 while (distancia <= 10){
+[e $U 193  ]
+[e :U 194 ]
+{
+"410
+[; ;Proyecto1D2_Master.c: 410:                     I2C_Master_Start();
+[e ( _I2C_Master_Start ..  ]
+"411
+[; ;Proyecto1D2_Master.c: 411:                     I2C_Master_Write(0x51);
+[e ( _I2C_Master_Write (1 -> -> 81 `i `ui ]
+"412
+[; ;Proyecto1D2_Master.c: 412:                     distancia = I2C_Master_Read(0);
+[e = _distancia -> ( _I2C_Master_Read (1 -> -> 0 `i `us `i ]
+"413
+[; ;Proyecto1D2_Master.c: 413:                     I2C_Master_Stop();
+[e ( _I2C_Master_Stop ..  ]
+"414
+[; ;Proyecto1D2_Master.c: 414:                     _delay((unsigned long)((50)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"415
+[; ;Proyecto1D2_Master.c: 415:                 }
+}
+[e :U 193 ]
+"409
+[; ;Proyecto1D2_Master.c: 409:                 while (distancia <= 10){
+[e $ <= _distancia -> 10 `i 194  ]
+[e :U 195 ]
+"417
+[; ;Proyecto1D2_Master.c: 417:                 I2C_Master_Start();
+[e ( _I2C_Master_Start ..  ]
+"418
+[; ;Proyecto1D2_Master.c: 418:                 I2C_Master_Write(0x50);
+[e ( _I2C_Master_Write (1 -> -> 80 `i `ui ]
+"419
+[; ;Proyecto1D2_Master.c: 419:                 I2C_Master_Write(0b00000000);
+[e ( _I2C_Master_Write (1 -> -> 0 `i `ui ]
+"420
+[; ;Proyecto1D2_Master.c: 420:                 I2C_Master_Stop();
+[e ( _I2C_Master_Stop ..  ]
+"421
+[; ;Proyecto1D2_Master.c: 421:                 _delay((unsigned long)((50)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"422
+[; ;Proyecto1D2_Master.c: 422:                 car =0;
+[e = _car -> -> 0 `i `c ]
+"423
+[; ;Proyecto1D2_Master.c: 423:             }
+}
+[e :U 186 ]
+[e :U 185 ]
+"424
+[; ;Proyecto1D2_Master.c: 424:         horariocar = 0;
+[e = _horariocar -> -> 0 `i `c ]
+"425
+[; ;Proyecto1D2_Master.c: 425:         manual = 0;
+[e = _manual -> -> 0 `i `c ]
+"426
+[; ;Proyecto1D2_Master.c: 426:         _delay((unsigned long)((2000)*(8000000/4000.0)));
+[e ( __delay (1 -> * -> -> 2000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
+"427
+[; ;Proyecto1D2_Master.c: 427:         }
 }
 [e :U 174 ]
 [e :U 173 ]
 [e :U 171 ]
 [e :U 169 ]
-"391
-[; ;Proyecto1D2_Master.c: 391:     }
+"428
+[; ;Proyecto1D2_Master.c: 428:     }
 }
 [e :U 144 ]
 [e $U 145  ]
 [e :U 146 ]
-"392
-[; ;Proyecto1D2_Master.c: 392:     return;
+"429
+[; ;Proyecto1D2_Master.c: 429:     return;
 [e $UE 143  ]
-"393
-[; ;Proyecto1D2_Master.c: 393: }
+"430
+[; ;Proyecto1D2_Master.c: 430: }
 [e :UE 143 ]
 }
-"397
-[; ;Proyecto1D2_Master.c: 397: void setup(void){
+"434
+[; ;Proyecto1D2_Master.c: 434: void setup(void){
 [v _setup `(v ~T0 @X0 1 ef ]
 {
 [e :U _setup ]
 [f ]
-"398
-[; ;Proyecto1D2_Master.c: 398:     ANSEL = 0;
+"435
+[; ;Proyecto1D2_Master.c: 435:     ANSEL = 0;
 [e = _ANSEL -> -> 0 `i `uc ]
-"399
-[; ;Proyecto1D2_Master.c: 399:     ANSELH = 0;
+"436
+[; ;Proyecto1D2_Master.c: 436:     ANSELH = 0;
 [e = _ANSELH -> -> 0 `i `uc ]
-"401
-[; ;Proyecto1D2_Master.c: 401:     TRISA = 0b1;
+"438
+[; ;Proyecto1D2_Master.c: 438:     TRISA = 0b1;
 [e = _TRISA -> -> 1 `i `uc ]
-"402
-[; ;Proyecto1D2_Master.c: 402:     TRISB = 0;
+"439
+[; ;Proyecto1D2_Master.c: 439:     TRISB = 0;
 [e = _TRISB -> -> 0 `i `uc ]
-"403
-[; ;Proyecto1D2_Master.c: 403:     TRISD = 0;
+"440
+[; ;Proyecto1D2_Master.c: 440:     TRISD = 0;
 [e = _TRISD -> -> 0 `i `uc ]
-"404
-[; ;Proyecto1D2_Master.c: 404:     TRISE = 0;
+"441
+[; ;Proyecto1D2_Master.c: 441:     TRISE = 0;
 [e = _TRISE -> -> 0 `i `uc ]
-"406
-[; ;Proyecto1D2_Master.c: 406:     PORTA = 0;
+"443
+[; ;Proyecto1D2_Master.c: 443:     PORTA = 0;
 [e = _PORTA -> -> 0 `i `uc ]
-"407
-[; ;Proyecto1D2_Master.c: 407:     PORTB = 0;
+"444
+[; ;Proyecto1D2_Master.c: 444:     PORTB = 0;
 [e = _PORTB -> -> 0 `i `uc ]
-"408
-[; ;Proyecto1D2_Master.c: 408:     PORTC = 0;
+"445
+[; ;Proyecto1D2_Master.c: 445:     PORTC = 0;
 [e = _PORTC -> -> 0 `i `uc ]
-"409
-[; ;Proyecto1D2_Master.c: 409:     PORTD = 0;
+"446
+[; ;Proyecto1D2_Master.c: 446:     PORTD = 0;
 [e = _PORTD -> -> 0 `i `uc ]
-"410
-[; ;Proyecto1D2_Master.c: 410:     PORTE = 0;
+"447
+[; ;Proyecto1D2_Master.c: 447:     PORTE = 0;
 [e = _PORTE -> -> 0 `i `uc ]
-"413
-[; ;Proyecto1D2_Master.c: 413:     I2C_Master_Init(100000);
+"450
+[; ;Proyecto1D2_Master.c: 450:     I2C_Master_Init(100000);
 [e ( _I2C_Master_Init (1 -> -> 100000 `l `ul ]
-"415
-[; ;Proyecto1D2_Master.c: 415:     INTCONbits.GIE = 1;
+"452
+[; ;Proyecto1D2_Master.c: 452:     INTCONbits.GIE = 1;
 [e = . . _INTCONbits 0 7 -> -> 1 `i `uc ]
-"416
-[; ;Proyecto1D2_Master.c: 416:     INTCONbits.PEIE = 1;
+"453
+[; ;Proyecto1D2_Master.c: 453:     INTCONbits.PEIE = 1;
 [e = . . _INTCONbits 0 6 -> -> 1 `i `uc ]
-"419
-[; ;Proyecto1D2_Master.c: 419:     OSCCONbits.IRCF = 0b111;
+"456
+[; ;Proyecto1D2_Master.c: 456:     OSCCONbits.IRCF = 0b111;
 [e = . . _OSCCONbits 0 4 -> -> 7 `i `uc ]
-"420
-[; ;Proyecto1D2_Master.c: 420:     OSCCONbits.SCS = 1;
+"457
+[; ;Proyecto1D2_Master.c: 457:     OSCCONbits.SCS = 1;
 [e = . . _OSCCONbits 0 0 -> -> 1 `i `uc ]
-"421
-[; ;Proyecto1D2_Master.c: 421: }
-[e :UE 190 ]
+"458
+[; ;Proyecto1D2_Master.c: 458: }
+[e :UE 196 ]
 }
 [p f _sprintf 8422532 ]
 [a 11C 37 48 50 117 58 37 48 50 117 58 37 48 50 117 0 ]
@@ -1515,5 +1580,5 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 14C 80 65 82 81 85 69 79 32 76 76 69 78 79 0 ]
 [a 4C 73 78 70 0 ]
 [a 5C 32 0 ]
-[a 12C 43 37 48 50 117 58 37 48 50 117 58 37 48 50 117 13 0 ]
-[a 13C 37 48 50 117 47 37 48 50 117 47 37 48 50 117 10 0 ]
+[a 12C 68 105 115 116 97 110 99 105 97 58 32 37 48 50 117 32 32 32 76 117 109 105 110 111 115 105 100 97 100 58 32 37 48 50 117 32 32 32 73 110 102 114 97 114 114 111 106 111 58 32 37 48 50 117 32 32 32 72 111 114 97 95 100 101 95 100 101 116 101 99 99 105 111 110 58 32 37 48 50 117 58 37 48 50 117 58 37 48 50 117 10 0 ]
+[a 13C 68 105 115 116 97 110 99 105 97 58 32 37 48 50 117 32 32 32 76 117 109 105 110 111 115 105 100 97 100 58 32 37 48 50 117 32 32 32 73 110 102 114 97 114 114 111 106 111 58 32 37 48 50 117 10 0 ]

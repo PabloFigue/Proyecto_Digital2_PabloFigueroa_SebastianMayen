@@ -2965,16 +2965,16 @@ void main() {
     setup();
     Timer1_Init();
     setupPWM();
-    CCPR1L = 187;
+    CCPR1L = 125;
 
     while(1){
         distancia = Obtener_Distancia();
         _delay((unsigned long)((50)*(8000000/4000.0)));
 
         if (bandera == 1){
-            CCPR1L = 125;
+            CCPR1L = 250 ;
         }else if(bandera == 0) {
-            CCPR1L = 187;
+            CCPR1L = 125;
         }
     }
 }

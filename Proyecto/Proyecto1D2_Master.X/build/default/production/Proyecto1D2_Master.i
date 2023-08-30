@@ -2947,7 +2947,7 @@ uint8_t DS3231_Bcd_Bin(uint8_t bcd_value);
 int8_t flag_parking = 0;
 int8_t horariocar = 0,car =0,manual =0;
 int z;
-int distancia,var_distancia;
+int distancia,var_distancia,bandera_hr =0;
 char distancia_string[10];
 int sensor_Infra;
 char sensor_Infra_string[10];
@@ -2955,7 +2955,7 @@ int sensor_Luz;
 char sensor_Luz_string[10];
 int8_t day, mth, year, dow, hr, min, sec;
 char buffer[20];
-char usart[20];
+char usart[50];
 
 
 
@@ -3001,7 +3001,7 @@ void main(void) {
     I2C_Master_Stop();
     _delay((unsigned long)((50)*(8000000/4000.0)));
 
-    DS3231_Set_Date_Time(19,8,23,2,00,49,50);
+    DS3231_Set_Date_Time(27,8,23,2,02,10,00);
     while(1){
         manual = PORTAbits.RA0;
         Lcd_Clear();
@@ -3099,18 +3099,34 @@ void main(void) {
                 sprintf(buffer, "%02u:%02u:%02u", hr, min, sec);
                 Lcd_Set_Cursor(2,1);
                 Lcd_Write_String(buffer);
+                bandera_hr = 1;
 
-                sprintf(usart,"+%02u:%02u:%02u\r",hr, min, sec);
-                UART_write_string(usart);
-                _delay((unsigned long)((2000)*(8000000/4000.0)));
+
+
+
                 horariocar = 1;
             }
         }
 
 
 
-        sprintf(usart, "%02u/%02u/%02u\n", var_distancia, sensor_Luz, sensor_Infra);
-        UART_write_string(usart);
+
+
+
+
+        if (bandera_hr == 1){
+            sprintf(usart, "Distancia: %02u   Luminosidad: %02u   Infrarrojo: %02u   Hora_de_deteccion: %02u:%02u:%02u\n", var_distancia, sensor_Luz, sensor_Infra, hr, min, sec);
+            UART_write_string(usart);
+            _delay((unsigned long)((2000)*(8000000/4000.0)));
+            UART_write_string(usart);
+            _delay((unsigned long)((500)*(8000000/4000.0)));
+            UART_write_string(usart);
+            bandera_hr = 0;
+        }
+        else if (bandera_hr == 0){
+            sprintf(usart, "Distancia: %02u   Luminosidad: %02u   Infrarrojo: %02u\n", var_distancia, sensor_Luz, sensor_Infra);
+            UART_write_string(usart);
+        }
 
 
 
@@ -3141,22 +3157,8 @@ void main(void) {
                 I2C_Master_Write(0x53);
                 z = I2C_Master_Read(0);
                 I2C_Master_Stop();
-                _delay((unsigned long)((50)*(8000000/4000.0)));
-
-                while (sensor_Infra == 1){
-                    I2C_Master_Start();
-                    I2C_Master_Write(0x52);
-                    I2C_Master_Write(0b00000001);
-                    I2C_Master_Stop();
-                    _delay((unsigned long)((50)*(8000000/4000.0)));
-
-                    I2C_Master_Start();
-                    I2C_Master_Write(0x53);
-                    sensor_Infra = I2C_Master_Read(0);
-                    I2C_Master_Stop();
-                    _delay((unsigned long)((50)*(8000000/4000.0)));
-                }
-
+                _delay((unsigned long)((5000)*(8000000/4000.0)));
+# 272 "Proyecto1D2_Master.c"
                 horariocar = 0;
 
                 I2C_Master_Start();
@@ -3244,6 +3246,13 @@ void main(void) {
                     I2C_Master_Stop();
                     _delay((unsigned long)((50)*(8000000/4000.0)));
                 }
+                while (distancia <= 10){
+                    I2C_Master_Start();
+                    I2C_Master_Write(0x51);
+                    distancia = I2C_Master_Read(0);
+                    I2C_Master_Stop();
+                    _delay((unsigned long)((50)*(8000000/4000.0)));
+                }
 
                 I2C_Master_Start();
                 I2C_Master_Write(0x50);
@@ -3251,9 +3260,16 @@ void main(void) {
                 I2C_Master_Stop();
                 _delay((unsigned long)((50)*(8000000/4000.0)));
 
+
                 I2C_Master_Start();
                 I2C_Master_Write(0x52);
                 I2C_Master_Write(0b00000011);
+                I2C_Master_Stop();
+                _delay((unsigned long)((50)*(8000000/4000.0)));
+
+                I2C_Master_Start();
+                I2C_Master_Write(0x53);
+                z = I2C_Master_Read(0);
                 I2C_Master_Stop();
                 _delay((unsigned long)((50)*(8000000/4000.0)));
 
@@ -3274,6 +3290,13 @@ void main(void) {
                         I2C_Master_Stop();
                         _delay((unsigned long)((50)*(8000000/4000.0)));
                     }
+                    I2C_Master_Start();
+                    I2C_Master_Write(0x51);
+                    distancia = I2C_Master_Read(0);
+                    I2C_Master_Stop();
+                    _delay((unsigned long)((50)*(8000000/4000.0)));
+                }
+                while (distancia <= 10){
                     I2C_Master_Start();
                     I2C_Master_Write(0x51);
                     distancia = I2C_Master_Read(0);

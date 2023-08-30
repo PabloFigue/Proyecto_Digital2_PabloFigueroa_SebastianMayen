@@ -103,33 +103,39 @@ void main(void) {
     //*************************************************************************
     while(1){
         sensor_Luz = adc_read();
-        if (sensor_Luz <= 128){
-            //PORTD = 255;
+        if (sensor_Luz <= 50){
+            PORTDbits.RD0 = 1;
+            PORTDbits.RD1 = 1;
+            PORTCbits.RC2 = 1;
         }else{
-            //PORTD = 0;
-        }
+            PORTDbits.RD0 = 0;
+            PORTDbits.RD1 = 0;
+            PORTCbits.RC2 = 0;
+        } 
         if (Puente == 0){
             PORTAbits.RA2 = 1;
-            __delay_ms(1000);
+            PORTAbits.RA3 = 0;
+            __delay_ms(4250);// tiempo de subida del elevador 
             PORTAbits.RA2= 0;
             Puente =2;
-        }else if (Puente == 1){
+        }else if (Puente == 1){           
             PORTAbits.RA3 = 1;
-            __delay_ms(1000);
+            PORTAbits.RA2 = 0;
+            __delay_ms(4250);// tiempo de bajada del elevador
             PORTAbits.RA3 = 0;
             Puente = 2;
         }
         
         //__delay_ms(100);
-        if (PORTAbits.RA1 == 1){
+        if (PORTAbits.RA1 == 0){ //infrarojo invertido
             __delay_ms(2000);
-            if (PORTAbits.RA1 == 1){
+            if (PORTAbits.RA1 == 0){//infrarojo invertido
                 sensor_Infra = 1;
             }else{
                 sensor_Infra = 0;
             }
         }
-       __delay_ms(100);
+      //__delay_ms(100);
        
     }
     return;
@@ -143,6 +149,7 @@ void setup(void){
     
     TRISA = 0b00011;
     TRISB = 0;
+    TRISC = 0;
     TRISD = 0;
     TRISE = 0;
     

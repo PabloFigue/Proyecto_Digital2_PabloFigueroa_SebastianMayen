@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.40 build 20220703182018 
-                                                                                               Wed Aug 23 21:09:21 2023
+                                                                                               Fri Aug 25 22:14:59 2023
 
 Microchip MPLAB XC8 C Compiler v2.40 (Free license) build 20220703182018 Og1 
      1                           	processor	16F887
@@ -704,8 +704,8 @@ Microchip MPLAB XC8 C Compiler v2.40 (Free license) build 20220703182018 Og1
    690     0152  120A  118A  21C1  120A  118A  	fcall	_setupPWM
    691     0157                     l1392:
    692                           
-   693                           ;Proyecto1D2_Slave.c: 99:     CCPR1L = 187;
-   694     0157  30BB               	movlw	187
+   693                           ;Proyecto1D2_Slave.c: 99:     CCPR1L = 125;
+   694     0157  307D               	movlw	125
    695     0158  1283               	bcf	3,5	;RP0=0, select bank0
    696     0159  1303               	bcf	3,6	;RP1=0, select bank0
    697     015A  0095               	movwf	21	;volatile
@@ -748,8 +748,8 @@ Microchip MPLAB XC8 C Compiler v2.40 (Free license) build 20220703182018 Og1
    734     0178                     u790:
    735     0178                     l1400:
    736                           
-   737                           ;Proyecto1D2_Slave.c: 106:             CCPR1L = 125;
-   738     0178  307D               	movlw	125
+   737                           ;Proyecto1D2_Slave.c: 106:             CCPR1L = 250 ;
+   738     0178  30FA               	movlw	250
    739     0179  0095               	movwf	21	;volatile
    740                           
    741                           ;Proyecto1D2_Slave.c: 107:         }else if(bandera == 0) {
@@ -1909,7 +1909,7 @@ DATA                 0      0      29      12        0.0%
 
 
 Microchip Technology PIC Macro Assembler V2.40 build 20220703182018 
-Symbol Table                                                                                   Wed Aug 23 21:09:21 2023
+Symbol Table                                                                                   Fri Aug 25 22:14:59 2023
 
                         _z 0074                _SSPSTATbits 0094                         _BF 04A0  
 __end_of_Obtener_Distancia 0148               ___awdiv@sign 0025                        l130 010E  

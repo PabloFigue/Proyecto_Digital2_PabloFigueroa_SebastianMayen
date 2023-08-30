@@ -670,8 +670,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;Proyecto1D2_Slave.c: 98:     setupPWM();
 [e ( _setupPWM ..  ]
 "99
-[; ;Proyecto1D2_Slave.c: 99:     CCPR1L = 187;
-[e = _CCPR1L -> -> 187 `i `uc ]
+[; ;Proyecto1D2_Slave.c: 99:     CCPR1L = 125;
+[e = _CCPR1L -> -> 125 `i `uc ]
 "101
 [; ;Proyecto1D2_Slave.c: 101:     while(1){
 [e :U 161 ]
@@ -687,8 +687,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $ ! == _bandera -> 1 `i 163  ]
 {
 "106
-[; ;Proyecto1D2_Slave.c: 106:             CCPR1L = 125;
-[e = _CCPR1L -> -> 125 `i `uc ]
+[; ;Proyecto1D2_Slave.c: 106:             CCPR1L = 250 ;
+[e = _CCPR1L -> -> 250 `i `uc ]
 "107
 [; ;Proyecto1D2_Slave.c: 107:         }else if(bandera == 0) {
 }
@@ -697,8 +697,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $ ! == _bandera -> 0 `i 165  ]
 {
 "108
-[; ;Proyecto1D2_Slave.c: 108:             CCPR1L = 187;
-[e = _CCPR1L -> -> 187 `i `uc ]
+[; ;Proyecto1D2_Slave.c: 108:             CCPR1L = 125;
+[e = _CCPR1L -> -> 125 `i `uc ]
 "109
 [; ;Proyecto1D2_Slave.c: 109:         }
 }

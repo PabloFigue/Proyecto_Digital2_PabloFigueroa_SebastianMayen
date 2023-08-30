@@ -87,7 +87,7 @@ void __interrupt() isr(void){
    if(ADIF == 1){
         while (!ADIF);
         ADIF = 0;
-    }
+    } 
 }
 //******************************************************************************
 //Funcion principal
@@ -96,16 +96,16 @@ void main() {
     setup();
     Timer1_Init();
     setupPWM();
-    CCPR1L = 187;
+    CCPR1L = 125;
     
     while(1){      
         distancia = Obtener_Distancia();
         __delay_ms(50);
         
         if (bandera == 1){
-            CCPR1L = 125; //125,-90 185,0 250,90
+            CCPR1L = 250 ; //125,-90 185,0 250,92
         }else if(bandera == 0) {
-            CCPR1L = 187;
+            CCPR1L = 125;
         } 
     }
 }    

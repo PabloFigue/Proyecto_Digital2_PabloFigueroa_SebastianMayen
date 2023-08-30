@@ -29,7 +29,7 @@ intentry CODE 0 4 4 8 2 1
 bssBANK0 BANK0 1 2F 2F E 1 1
 bssCOMMON COMMON 1 70 70 5 1 1
 config CONFIG 4 2007 2007 2 2 1
-$C:\Users\pablo\AppData\Local\Temp\xcAs180s.o
+$C:\Users\pablo\AppData\Local\Temp\xcAs9v4.o
 idloc IDLOC 5 2000 2000 4 2 1
 reset_vec CODE 0 0 0 3 2 1
 end_init CODE 0 C C 3 2 1
@@ -78,32 +78,32 @@ STRING 1D9-1FFF 2
 # All other numeric values are in decimal.
 %LINETAB
 $dist/default/production\Proyecto1D2_Slave.X.production.o
-F cinit CODE >1005:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-F cinit CODE >1008:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-F cinit CODE >1037:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-10 cinit CODE >1038:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-11 cinit CODE >1039:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-12 cinit CODE >1040:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-13 cinit CODE >1041:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-14 cinit CODE >1044:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-15 cinit CODE >1045:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-16 cinit CODE >1046:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-17 cinit CODE >1047:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-18 cinit CODE >1048:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-19 cinit CODE >1049:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-1A cinit CODE >1050:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-1B cinit CODE >1051:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-1C cinit CODE >1052:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-1D cinit CODE >1053:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-1E cinit CODE >1054:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-1F cinit CODE >1055:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-20 cinit CODE >1056:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-21 cinit CODE >1057:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-22 cinit CODE >1058:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-23 cinit CODE >1059:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-24 cinit CODE >1065:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-24 cinit CODE >1067:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
-25 cinit CODE >1068:C:\Users\pablo\AppData\Local\Temp\xcAs180s.s
+F cinit CODE >1005:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+F cinit CODE >1008:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+F cinit CODE >1037:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+10 cinit CODE >1038:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+11 cinit CODE >1039:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+12 cinit CODE >1040:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+13 cinit CODE >1041:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+14 cinit CODE >1044:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+15 cinit CODE >1045:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+16 cinit CODE >1046:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+17 cinit CODE >1047:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+18 cinit CODE >1048:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+19 cinit CODE >1049:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+1A cinit CODE >1050:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+1B cinit CODE >1051:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+1C cinit CODE >1052:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+1D cinit CODE >1053:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+1E cinit CODE >1054:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+1F cinit CODE >1055:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+20 cinit CODE >1056:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+21 cinit CODE >1057:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+22 cinit CODE >1058:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+23 cinit CODE >1059:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+24 cinit CODE >1065:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+24 cinit CODE >1067:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
+25 cinit CODE >1068:C:\Users\pablo\AppData\Local\Temp\xcAs9v4.s
 4 intentry CODE >54:C:\Users\pablo\Documents\DIGITAL2\PROYECTO\Proyecto\Proyecto1D2_Slave.X\Proyecto1D2_Slave.c
 28 text7 CODE >54:C:\Users\pablo\Documents\DIGITAL2\PROYECTO\Proyecto\Proyecto1D2_Slave.X\Proyecto1D2_Slave.c
 28 text7 CODE >55:C:\Users\pablo\Documents\DIGITAL2\PROYECTO\Proyecto\Proyecto1D2_Slave.X\Proyecto1D2_Slave.c
@@ -264,18 +264,18 @@ _BF 4A0 0 ABS 0 - dist/default/production\Proyecto1D2_Slave.X.production.o
 __Hstrings 0 0 ABS 0 strings -
 _ADIF 66 0 ABS 0 - dist/default/production\Proyecto1D2_Slave.X.production.o
 _PEIE 5E 0 ABS 0 - dist/default/production\Proyecto1D2_Slave.X.production.o
-___sp 0 0 STACK 2 stack C:\Users\pablo\AppData\Local\Temp\xcAs180s.o
+___sp 0 0 STACK 2 stack C:\Users\pablo\AppData\Local\Temp\xcAs9v4.o
 _main 290 0 CODE 0 maintext dist/default/production\Proyecto1D2_Slave.X.production.o
 btemp 7E 0 ABS 0 - dist/default/production\Proyecto1D2_Slave.X.production.o
-start 18 0 CODE 0 init C:\Users\pablo\AppData\Local\Temp\xcAs180s.o
+start 18 0 CODE 0 init C:\Users\pablo\AppData\Local\Temp\xcAs9v4.o
 __HbssCOMMON 0 0 ABS 0 bssCOMMON -
 __Hpowerup 0 0 CODE 0 powerup -
-intlevel0 0 0 ENTRY 0 functab C:\Users\pablo\AppData\Local\Temp\xcAs180s.o
-intlevel1 0 0 ENTRY 0 functab C:\Users\pablo\AppData\Local\Temp\xcAs180s.o
-intlevel2 0 0 ENTRY 0 functab C:\Users\pablo\AppData\Local\Temp\xcAs180s.o
-intlevel3 0 0 ENTRY 0 functab C:\Users\pablo\AppData\Local\Temp\xcAs180s.o
-intlevel4 0 0 ENTRY 0 functab C:\Users\pablo\AppData\Local\Temp\xcAs180s.o
-intlevel5 0 0 ENTRY 0 functab C:\Users\pablo\AppData\Local\Temp\xcAs180s.o
+intlevel0 0 0 ENTRY 0 functab C:\Users\pablo\AppData\Local\Temp\xcAs9v4.o
+intlevel1 0 0 ENTRY 0 functab C:\Users\pablo\AppData\Local\Temp\xcAs9v4.o
+intlevel2 0 0 ENTRY 0 functab C:\Users\pablo\AppData\Local\Temp\xcAs9v4.o
+intlevel3 0 0 ENTRY 0 functab C:\Users\pablo\AppData\Local\Temp\xcAs9v4.o
+intlevel4 0 0 ENTRY 0 functab C:\Users\pablo\AppData\Local\Temp\xcAs9v4.o
+intlevel5 0 0 ENTRY 0 functab C:\Users\pablo\AppData\Local\Temp\xcAs9v4.o
 __LbssCOMMON 0 0 ABS 0 bssCOMMON -
 _OSCCONbits 8F 0 ABS 0 - dist/default/production\Proyecto1D2_Slave.X.production.o
 wtemp0 7E 0 ABS 0 - dist/default/production\Proyecto1D2_Slave.X.production.o
@@ -292,8 +292,8 @@ __Lmaintext 0 0 ABS 0 maintext -
 __LnvBANK0 0 0 ABS 0 nvBANK0 -
 ___awdiv@divisor 20 0 BANK0 1 cstackBANK0 dist/default/production\Proyecto1D2_Slave.X.production.o
 __end_of___awdiv 1F6 0 CODE 0 text6 dist/default/production\Proyecto1D2_Slave.X.production.o
-___stackhi 0 0 ABS 0 - C:\Users\pablo\AppData\Local\Temp\xcAs180s.o
-___stacklo 0 0 ABS 0 - C:\Users\pablo\AppData\Local\Temp\xcAs180s.o
+___stackhi 0 0 ABS 0 - C:\Users\pablo\AppData\Local\Temp\xcAs9v4.o
+___stacklo 0 0 ABS 0 - C:\Users\pablo\AppData\Local\Temp\xcAs9v4.o
 _I2C_Slave_Init 34E 0 CODE 0 text3 dist/default/production\Proyecto1D2_Slave.X.production.o
 start_initialization 1E 0 CODE 0 cinit dist/default/production\Proyecto1D2_Slave.X.production.o
 _TRISCbits 87 0 ABS 0 - dist/default/production\Proyecto1D2_Slave.X.production.o
@@ -303,7 +303,7 @@ _SSPBUF 13 0 ABS 0 - dist/default/production\Proyecto1D2_Slave.X.production.o
 _SSPCON 14 0 ABS 0 - dist/default/production\Proyecto1D2_Slave.X.production.o
 _TRISC3 43B 0 ABS 0 - dist/default/production\Proyecto1D2_Slave.X.production.o
 _TRISC4 43C 0 ABS 0 - dist/default/production\Proyecto1D2_Slave.X.production.o
-___int_sp 0 0 STACK 2 stack C:\Users\pablo\AppData\Local\Temp\xcAs180s.o
+___int_sp 0 0 STACK 2 stack C:\Users\pablo\AppData\Local\Temp\xcAs9v4.o
 __Hbank0 0 0 ABS 0 bank0 -
 __Hbank1 0 0 ABS 0 bank1 -
 __Hbank2 0 0 ABS 0 bank2 -
@@ -357,7 +357,7 @@ _bandera 39 0 BANK0 1 bssBANK0 dist/default/production\Proyecto1D2_Slave.X.produ
 __end_of_isr 124 0 CODE 0 text7 dist/default/production\Proyecto1D2_Slave.X.production.o
 __HnvBANK0 0 0 ABS 0 nvBANK0 -
 __Lintentry 8 0 CODE 0 intentry -
-reset_vec 0 0 CODE 0 reset_vec C:\Users\pablo\AppData\Local\Temp\xcAs180s.o
+reset_vec 0 0 CODE 0 reset_vec C:\Users\pablo\AppData\Local\Temp\xcAs9v4.o
 __LbssBANK0 0 0 ABS 0 bssBANK0 -
 _PIE1bits 8C 0 ABS 0 - dist/default/production\Proyecto1D2_Slave.X.production.o
 ___awdiv 124 0 CODE 0 text6 dist/default/production\Proyecto1D2_Slave.X.production.o

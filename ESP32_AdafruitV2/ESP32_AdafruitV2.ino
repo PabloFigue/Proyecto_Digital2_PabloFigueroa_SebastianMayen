@@ -19,20 +19,12 @@
 #include <HardwareSerial.h>
 HardwareSerial SerialPort(2);
 
+String usart;
+
+AdafruitIO_Feed *statusFeed = io.feed("status-sensores");
 /************************ Example Starts Here *******************************/
 
 // this int will hold the current count for our sketch
-String usart;
-String horario;
-int distanciaValue = 0;
-int sensorLuzValue = 0;
-int sensorInfraValue = 0;
-
-// set up the 'counter' feed
-AdafruitIO_Feed *distanciaFeed = io.feed("distancia");
-AdafruitIO_Feed *sensorInfraFeed = io.feed("sensor-infra");
-AdafruitIO_Feed *sensorLuzFeed = io.feed("sensor-luz");
-AdafruitIO_Feed *horarioFeed = io.feed("sensor-rtc");
 
 void setup() {
 
@@ -62,29 +54,19 @@ void setup() {
 
 void loop() {
   io.run();
-  usart = SerialPort.readStringUntil('\n');
-  Serial.println("imprimiendo");
-  Serial.println(usart);
 
-    if (usart.charAt(0) == '+') {
-      horario = usart.substring(1, 9);
-      horarioFeed->save(horario);
-    } else {
-      distanciaValue = usart.substring(0, 2).toInt();
-      sensorLuzValue = usart.substring(3, 6).toInt();
-      sensorInfraValue = usart.substring(7, 8).toInt();
+    SerialPort.readStringUntil('\n');
+    SerialPort.readStringUntil('\n');
+    SerialPort.readStringUntil('\n');
+    SerialPort.readStringUntil('\n');
+    // Leer el último byte
+    usart = SerialPort.readStringUntil('\n');
+    Serial.println("imprimiendo");
+    Serial.println(usart);
+    statusFeed->save(usart);
+    
+    delay(2000);    // Añadir una pausa entre publicaciones
 
-      distanciaFeed->save(distanciaValue);
-      sensorLuzFeed->save(sensorLuzValue);
-      sensorInfraFeed->save(sensorInfraValue);
-
-    }
-    delay(12000);
 }
-    // Añadir una pausa entre publicaciones
 
-  
-
-
-
-
+ 
